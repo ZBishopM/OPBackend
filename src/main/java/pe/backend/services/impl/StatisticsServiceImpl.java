@@ -6,20 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.backend.entities.Tournament;
-import pe.backend.repositories.TournamentRepository;
-import pe.backend.services.TournamentService;
+import pe.backend.entities.Statistics;
+import pe.backend.repositories.StatisticsRepository;
+import pe.backend.services.StatisticsService;
+
 
 @Service
-public class TournamentServiceImpl implements TournamentService {
-	@Autowired
-	TournamentRepository tournamentRepo;
+public class StatisticsServiceImpl implements StatisticsService {
 
+	@Autowired
+	StatisticsRepository statisticsRepo;
+	
 	@Override
-	public boolean insertar(Tournament objTournament) {
+	public boolean insertar(Statistics entity) {
 		boolean flag = false;
 		try {
-			if(tournamentRepo.save(objTournament) != null) {
+			if(statisticsRepo.save(entity) != null) {
 				flag = true;
 			}			
 		} catch (Exception e) {
@@ -30,29 +32,29 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 
 	@Override
-	public List<Tournament> listarTodas() {
-		return tournamentRepo.findAll();
+	public List<Statistics> listarTodas() {
+		return statisticsRepo.findAll();
 	}
 
 	@Override
-	public Optional<Tournament> buscarPorID(int id) {
-		Optional<Tournament> objTournament = null;
+	public Optional<Statistics> buscarPorID(int id) {
+		Optional<Statistics> entity = null;
 		try {
-			objTournament = tournamentRepo.findById(id);
+			entity = statisticsRepo.findById(id);
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
 		
-		return objTournament;
+		return entity;
 	}
 
 	@Override
-	public boolean actualizar(Tournament objTournament) {
+	public boolean actualizar(Statistics entity) {
 		boolean flag = false;
 		try {
-			if( objTournament.getId() >1) { 
-				if(tournamentRepo.save(objTournament) != null) {
+			if( entity.getId() >1) { 
+				if(statisticsRepo.save(entity) != null) {
 					flag = true;
 				}	
 			}					
@@ -68,7 +70,7 @@ public class TournamentServiceImpl implements TournamentService {
 		boolean flag = false;
 		try {
 			if(id>1) { 
-				tournamentRepo.deleteById(id);
+				statisticsRepo.deleteById(id);
 				flag = true;
 			}else {
 				flag = false;
@@ -79,6 +81,5 @@ public class TournamentServiceImpl implements TournamentService {
 		
 		return flag;
 	}
-	
 
 }

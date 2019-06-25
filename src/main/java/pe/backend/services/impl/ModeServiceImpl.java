@@ -51,7 +51,7 @@ public class ModeServiceImpl implements ModeService {
 	public boolean actualizar(Mode objMode) {
 		boolean flag = false;
 		try {
-			if( objMode.getId() >1) { //Ejemplo de aplicacion de logica, solo actualizar si hay un ID
+			if( objMode.getId() >1) { 
 				if(modeRepo.save(objMode) != null) {
 					flag = true;
 				}	
@@ -67,7 +67,7 @@ public class ModeServiceImpl implements ModeService {
 	public boolean eliminar(int id) {
 		boolean flag = false;
 		try {
-			if(id>1) { //Ejemplo de aplicacion de logica, solo eliminar si hay un ID
+			if(id>1) { 
 				modeRepo.deleteById(id);
 				flag = true;
 			}else {

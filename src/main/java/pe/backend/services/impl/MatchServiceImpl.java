@@ -6,20 +6,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.backend.entities.Tournament;
-import pe.backend.repositories.TournamentRepository;
-import pe.backend.services.TournamentService;
+import pe.backend.entities.Match;
+import pe.backend.entities.Player;
+import pe.backend.repositories.MatchRepository;
+import pe.backend.services.MatchService;
+
 
 @Service
-public class TournamentServiceImpl implements TournamentService {
+public class MatchServiceImpl implements MatchService {
+
 	@Autowired
-	TournamentRepository tournamentRepo;
+	MatchRepository matchRepo;
 
 	@Override
-	public boolean insertar(Tournament objTournament) {
+	public boolean insertar(Match entity) {
 		boolean flag = false;
 		try {
-			if(tournamentRepo.save(objTournament) != null) {
+			if(matchRepo.save(entity) != null) {
 				flag = true;
 			}			
 		} catch (Exception e) {
@@ -30,29 +33,29 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 
 	@Override
-	public List<Tournament> listarTodas() {
-		return tournamentRepo.findAll();
+	public List<Match> listarTodas() {
+		return matchRepo.findAll();
 	}
 
 	@Override
-	public Optional<Tournament> buscarPorID(int id) {
-		Optional<Tournament> objTournament = null;
+	public Optional<Match> buscarPorID(int id) {
+		Optional<Match> entity = null;
 		try {
-			objTournament = tournamentRepo.findById(id);
+			entity = matchRepo.findById(id);
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
 		
-		return objTournament;
+		return entity;
 	}
 
 	@Override
-	public boolean actualizar(Tournament objTournament) {
+	public boolean actualizar(Match entity) {
 		boolean flag = false;
 		try {
-			if( objTournament.getId() >1) { 
-				if(tournamentRepo.save(objTournament) != null) {
+			if( entity.getId() >1) {
+				if(matchRepo.save(entity) != null) {
 					flag = true;
 				}	
 			}					
@@ -68,7 +71,7 @@ public class TournamentServiceImpl implements TournamentService {
 		boolean flag = false;
 		try {
 			if(id>1) { 
-				tournamentRepo.deleteById(id);
+				matchRepo.deleteById(id);
 				flag = true;
 			}else {
 				flag = false;
@@ -78,7 +81,5 @@ public class TournamentServiceImpl implements TournamentService {
 		}
 		
 		return flag;
-	}
-	
-
+	}	
 }

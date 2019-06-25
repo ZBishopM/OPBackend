@@ -6,20 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.backend.entities.Tournament;
-import pe.backend.repositories.TournamentRepository;
-import pe.backend.services.TournamentService;
+import pe.backend.entities.Player;
+import pe.backend.repositories.PlayerRepository;
+import pe.backend.services.PlayerService;
+
 
 @Service
-public class TournamentServiceImpl implements TournamentService {
+public class PlayerServiceImpl implements PlayerService {
+
 	@Autowired
-	TournamentRepository tournamentRepo;
+	PlayerRepository playerRepo;
 
 	@Override
-	public boolean insertar(Tournament objTournament) {
+	public boolean insertar(Player entity) {
 		boolean flag = false;
 		try {
-			if(tournamentRepo.save(objTournament) != null) {
+			if(playerRepo.save(entity) != null) {
 				flag = true;
 			}			
 		} catch (Exception e) {
@@ -30,29 +32,29 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 
 	@Override
-	public List<Tournament> listarTodas() {
-		return tournamentRepo.findAll();
+	public List<Player> listarTodas() {
+		return playerRepo.findAll();
 	}
 
 	@Override
-	public Optional<Tournament> buscarPorID(int id) {
-		Optional<Tournament> objTournament = null;
+	public Optional<Player> buscarPorID(int id) {
+		Optional<Player> entity = null;
 		try {
-			objTournament = tournamentRepo.findById(id);
+			entity = playerRepo.findById(id);
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
 		
-		return objTournament;
+		return entity;
 	}
 
 	@Override
-	public boolean actualizar(Tournament objTournament) {
+	public boolean actualizar(Player entity) {
 		boolean flag = false;
 		try {
-			if( objTournament.getId() >1) { 
-				if(tournamentRepo.save(objTournament) != null) {
+			if( entity.getId() >1) {
+				if(playerRepo.save(entity) != null) {
 					flag = true;
 				}	
 			}					
@@ -68,7 +70,7 @@ public class TournamentServiceImpl implements TournamentService {
 		boolean flag = false;
 		try {
 			if(id>1) { 
-				tournamentRepo.deleteById(id);
+				playerRepo.deleteById(id);
 				flag = true;
 			}else {
 				flag = false;
@@ -80,5 +82,5 @@ public class TournamentServiceImpl implements TournamentService {
 		return flag;
 	}
 	
-
+	
 }

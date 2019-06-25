@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -45,13 +46,25 @@ public class Tournament{
 	private String Game;
 	private int NTeams;
 	
-	@JsonIgnoreProperties("player")  //para evitar entrar en un bucle al enviar la información
-	@ManyToOne(fetch=FetchType.LAZY)
-	private Player player; // si agrego player, tengo que agregar team y asi sucesivamente pero tengo sueño.
+	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
+	@OneToOne(mappedBy="tournament", fetch=FetchType.LAZY) //No estoy seguro de que sea asi, pero debe ser one to one
+	private Player Player;								   //porque un jugador solo puede crear un torneo
 	
-	@JsonIgnoreProperties("mode")  //para evitar entrar en un bucle al enviar la información
+	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
 	@ManyToOne(fetch=FetchType.LAZY)
-	private Mode mode;
+	private Mode Mode;
+	
+	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@OneToMany(mappedBy="tournament", fetch=FetchType.LAZY)
+	private List<Match> Matches;
+
+	public List<Match> getMatches() {
+		return Matches;
+	}
+
+	public void setMatches(List<Match> matches) {
+		Matches = matches;
+	}
 
 	public int getId() {
 		return Id;
@@ -102,21 +115,19 @@ public class Tournament{
 	}
 
 	public Player getPlayer() {
-		return player;
+		return Player;
 	}
 
 	public void setPlayer(Player player) {
-		this.player = player;
+		Player = player;
 	}
 
 	public Mode getMode() {
-		return mode;
+		return Mode;
 	}
 
 	public void setMode(Mode mode) {
-		this.mode = mode;
-	}	
+		Mode = mode;
+	}
 	
-	
-
 }
