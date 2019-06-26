@@ -16,4 +16,6 @@ public interface MatchService {
 	public boolean actualizar(Match entity);
 	
 	public boolean eliminar(int id);
+
+	public int GenerateMatches1(List<Match> Matches);
 }

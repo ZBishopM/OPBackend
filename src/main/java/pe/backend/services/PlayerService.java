@@ -17,4 +17,6 @@ public interface PlayerService {
 	
 	public boolean eliminar(int id);
 
+	public List<Player> getPlayersFromTeamId(int id);
+
 }

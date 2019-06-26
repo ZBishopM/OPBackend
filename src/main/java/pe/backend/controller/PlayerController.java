@@ -111,4 +111,19 @@ public class PlayerController{
 			throw new ModeloNotFoundException("Jugador no encontrado");
 		}
 	}
+	
+	@GetMapping(value="/team/{id}")
+	public ResponseEntity<List<Player>> buscarPlayersPorTeamID(@PathVariable int id){
+		try {
+			List<Player> entity = playerService.getPlayersFromTeamId(id);
+			if(entity.isEmpty() == false){
+				return new ResponseEntity<List<Player>>(entity, HttpStatus.OK);		
+			}else {
+				throw new ModeloNotFoundException("Jugador no encontrado");
+			}			
+		} catch (Exception e) {
+			throw new ModeloNotFoundException("Jugador no encontrado");
+		}
+	}
+	
 }

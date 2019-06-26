@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import pe.backend.entities.Mode;
+import pe.backend.entities.Team;
 
 
 public interface ModeService {
@@ -16,6 +17,8 @@ public interface ModeService {
 	
 	public boolean actualizar(Mode entity);
 	
-	public boolean eliminar(int id);	
+	public boolean eliminar(int id);
+
+	public Team TrueResults(List<Team> equipos);	
 	
 }
