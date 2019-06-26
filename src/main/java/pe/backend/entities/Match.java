@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -14,41 +15,50 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name="match")
+@Table(name="matches")
 @ApiModel(value="Representa la tabla match.")
 public class Match{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
 	
-	@JsonIgnoreProperties("match")
-	@OneToOne(mappedBy="match", fetch=FetchType.LAZY)
+	@JsonBackReference
+	@ManyToOne()
+	@JoinColumn(name = "winner")
 	private Team Winner;
 	
 	private int Fase;
 	
-	@JsonIgnoreProperties("match")
-	@OneToOne(mappedBy="match", fetch=FetchType.LAZY)
+	@JsonBackReference
+	@NotNull(message = "El team no puede ser nulo")
+	@ManyToOne()
+	@JoinColumn(name = "team1")
 	private Team Team1;
 	
-	@JsonIgnoreProperties("match")
-	@OneToOne(mappedBy="match", fetch=FetchType.LAZY)
+	@JsonBackReference
+	@NotNull(message = "El team no puede ser nulo")
+	@ManyToOne()
+	@JoinColumn(name = "team2")
 	private Team Team2;
 	
-	@JsonIgnoreProperties("match")
+	@JsonBackReference
+	@NotNull(message = "El torneo no puede ser nulo")
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Tournament Tournament;
 
-	@JsonIgnoreProperties("match")
-	@OneToMany(mappedBy="match", fetch=FetchType.LAZY)
+	@JsonManagedReference
+	@OneToMany(mappedBy="Match", fetch=FetchType.LAZY)
 	private List<Statistics> Statistics;
 	
 	public int getId() {

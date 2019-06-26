@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -15,13 +14,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name="mode")
+@Table(name="modes")
 /*@NamedQueries({
 	@NamedQuery(
 			name="Categoria.buscarPorNombre", 
@@ -37,11 +38,15 @@ import io.swagger.annotations.ApiModelProperty;
 public class Mode{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
+	
+	@NotNull(message = "El Formato no puede ser nulo")
+	@Size(min = 3, max = 75, message = "El formato debe estar entre 3 y 75 caracteres")
 	private String Format;
 	
-	@JsonIgnoreProperties("mode") //para evitar entrar en un bucle al enviar la información
-	@OneToMany(mappedBy="mode", fetch=FetchType.LAZY)
+	@JsonManagedReference
+	@OneToMany(mappedBy="Mode", fetch=FetchType.LAZY)
 	private List<Tournament> tournaments;
 
 	public int getId() {

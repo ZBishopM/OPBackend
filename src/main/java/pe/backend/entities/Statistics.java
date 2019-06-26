@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
@@ -26,19 +26,24 @@ import io.swagger.annotations.ApiModelProperty;
 public class Statistics{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
 	
-	@JsonIgnoreProperties("statistics")
+	@JsonBackReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Match Match;
 	
-	@JsonIgnoreProperties("statistics")
+	@JsonBackReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Player Player;
 	
+	@NotNull(message = "El valor no puede ser nulo")
 	private float Kills;
+	@NotNull(message = "El valor no puede ser nulo")
 	private float Deaths;
+	@NotNull(message = "El valor no puede ser nulo")
 	private float Assits;
+	@NotNull(message = "El valor no puede ser nulo")
 	private float Damage;
 	public int getId() {
 		return Id;
