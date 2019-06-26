@@ -41,26 +41,26 @@ public class Team{
 	@Min(value = 0, message = "La cantidad de miembros no debe ser menor a 0")
 	private int NMembers;	
 		
-	@JsonBackReference
-	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnoreProperties("team")
+	@ManyToOne()
 	private Tournament Tournament;
 	
-	@JsonManagedReference
+	/*@JsonIgnoreProperties("team")
 	@OneToMany(mappedBy="Team", fetch=FetchType.LAZY)
-	private List<Player> Players;	
+	private List<Player> Players;	*/
 	
 
 	public int getId() {
 		return Id;
 	}
 
-	public List<Player> getPlayers() {
+	/*public List<Player> getPlayers() {
 		return Players;
 	}
 
 	public void setPlayers(List<Player> players) {
 		Players = players;
-	}
+	}*/
 
 	public void setId(int id) {
 		Id = id;

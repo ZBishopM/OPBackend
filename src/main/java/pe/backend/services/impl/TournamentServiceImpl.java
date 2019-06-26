@@ -31,6 +31,7 @@ public class TournamentServiceImpl implements TournamentService {
 
 	@Override
 	public List<Tournament> listarTodas() {
+		
 		return tournamentRepo.findAll();
 	}
 
@@ -39,6 +40,7 @@ public class TournamentServiceImpl implements TournamentService {
 		Optional<Tournament> objTournament = null;
 		try {
 			objTournament = tournamentRepo.findById(id);
+			objTournament.get().getPlayer().setTeam(null);
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());

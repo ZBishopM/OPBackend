@@ -33,32 +33,32 @@ public class Player{
 	private int Id;
 	
 	@NotNull(message="El nombre no puede ser nulo")
-	@Size(max=75, min=3, message="El nombre debe estar entre 3 y 75 caracteres")
+	@Size(max=75, min=1, message="El nombre debe estar entre 3 y 75 caracteres")
 	private String Name;
 	
 	@Size(max=75, min=3, message="El juego preferido debe estar entre 3 y 75 caracteres")
 	private String GamePreferences;
 	
-	@JsonBackReference	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnoreProperties("player")	
+	@ManyToOne()
 	private Team Team;
 	
-	@JsonManagedReference
+	/*@JsonIgnoreProperties("player")
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
 	private List<Statistics> Statistics;
 	
-	@JsonManagedReference
+	@JsonIgnoreProperties("player")
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
 	private List<Tournament> Tournaments;
 
 	
 	public List<Statistics> getStatistics() {
 		return Statistics;
-	}
+	}*/
 
-	public void setStatistics(List<Statistics> statistics) {
+	/*public void setStatistics(List<Statistics> statistics) {
 		Statistics = statistics;
-	}
+	}*/
 
 	public int getId() {
 		return Id;

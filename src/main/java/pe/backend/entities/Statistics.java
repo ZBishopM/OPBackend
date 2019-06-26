@@ -29,12 +29,12 @@ public class Statistics{
 	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
 	
-	@JsonBackReference
-	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnoreProperties("statistics")
+	@ManyToOne()
 	private Match Match;
 	
-	@JsonBackReference
-	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnoreProperties("statistics")
+	@ManyToOne()
 	private Player Player;
 	
 	@NotNull(message = "El valor no puede ser nulo")

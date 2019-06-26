@@ -103,6 +103,7 @@ public class TournamentController{
 		try {
 			Optional<Tournament> objTournament = serviceTournament.buscarPorID(id);
 			if(objTournament.isPresent()){
+				objTournament.get().getPlayer().setTeam(null);
 				return new ResponseEntity<Tournament>(objTournament.get(), HttpStatus.OK);				
 			}else {
 				throw new ModeloNotFoundException("Torneo no encontrado");
