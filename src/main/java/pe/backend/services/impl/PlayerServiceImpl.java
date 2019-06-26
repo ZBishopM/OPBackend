@@ -82,5 +82,17 @@ public class PlayerServiceImpl implements PlayerService {
 		return flag;
 	}
 	
+	@Override
+	public List<Player> getPlayersFromTeamId(int id)
+	{
+		List<Player> players = playerRepo.getPlayersFromTeamId(id);
+		
+		for (int i = 0; i<players.size(); i++)
+		{
+			players.get(i).setTeam(null);
+		}
+		return players;
+	}
+	
 	
 }

@@ -2,11 +2,13 @@ package pe.backend.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.backend.entities.Mode;
+import pe.backend.entities.Team;
 import pe.backend.repositories.ModeRepository;
 import pe.backend.services.ModeService;
 
@@ -78,6 +80,13 @@ public class ModeServiceImpl implements ModeService {
 		}
 		
 		return flag;
+	}
+	
+	@Override public Team TrueResults(List<Team> equipos)
+	{
+		Random r = new Random();
+		Team winner = equipos.get(r.nextInt(2));
+		return winner;
 	}
 
 }

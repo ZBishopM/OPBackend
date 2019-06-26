@@ -25,6 +25,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="players")
+@NamedQueries({
+	@NamedQuery(
+			name = "Player.getPlayersFromTeamId",
+			query = "select p from Player p where p.Team.Id = ?1"
+			)
+})
 @ApiModel(value="Representa la tabla player.")
 public class Player{	
 	@Id
