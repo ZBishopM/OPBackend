@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.backend.entities.Match;
-import pe.backend.entities.Player;
 import pe.backend.repositories.MatchRepository;
 import pe.backend.services.MatchService;
 

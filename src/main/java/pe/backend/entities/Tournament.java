@@ -14,16 +14,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name="tournament")
+@Table(name="tournaments")
 /*@NamedQueries({
 	@NamedQuery(
 			name="Categoria.buscarPorNombre", 
@@ -39,23 +44,32 @@ import io.swagger.annotations.ApiModelProperty;
 public class Tournament{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
+	@NotNull(message = "El valor no puede ser nulo")
+	@Size(min = 3, max = 75, message = "El nombre debe estar contenido entre 3 y 75 caracteres")
 	private String Name;
+	@Future(message = "La fecha debe ser como minima en las siguientes 24horas")
 	private Date Date;
+	@Size(min = 3, max = 75, message = "El ganador debe estar contenido entre 3 y 75 caracteres")
 	private String Winner;
+	@NotNull(message = "El valor no puede ser nulo")
+	@Size(min = 3, max = 75, message = "El juego debe estar contenido entre 3 y 75 caracteres")
 	private String Game;
+	@NotNull(message = "El valor no puede ser nulo")
+	@Min(value = 3, message = "El numero de teams no debe ser menor a 0")
 	private int NTeams;
 	
-	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
-	@OneToOne(mappedBy="tournament", fetch=FetchType.LAZY) //No estoy seguro de que sea asi, pero debe ser one to one
+	@JsonBackReference  //para evitar entrar en un bucle al enviar la información
+	@ManyToOne(fetch=FetchType.LAZY) //No estoy seguro de que sea asi, pero debe ser one to one
 	private Player Player;								   //porque un jugador solo puede crear un torneo
 	
-	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
+	@JsonBackReference  //para evitar entrar en un bucle al enviar la información
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Mode Mode;
 	
-	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
-	@OneToMany(mappedBy="tournament", fetch=FetchType.LAZY)
+	@JsonManagedReference //para evitar entrar en un bucle al enviar la información
+	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
 	private List<Match> Matches;
 
 	public List<Match> getMatches() {
