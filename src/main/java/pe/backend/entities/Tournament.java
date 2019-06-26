@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -57,28 +56,27 @@ public class Tournament{
 	@Size(min = 3, max = 75, message = "El juego debe estar contenido entre 3 y 75 caracteres")
 	private String Game;
 	@NotNull(message = "El valor no puede ser nulo")
-	@Min(value = 3, message = "El numero de teams no debe ser menor a 0")
 	private int NTeams;
 	
-	@JsonBackReference  //para evitar entrar en un bucle al enviar la información
-	@ManyToOne(fetch=FetchType.LAZY) //No estoy seguro de que sea asi, pero debe ser one to one
+	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@ManyToOne() //No estoy seguro de que sea asi, pero debe ser one to one
 	private Player Player;								   //porque un jugador solo puede crear un torneo
 	
-	@JsonBackReference  //para evitar entrar en un bucle al enviar la información
-	@ManyToOne(fetch=FetchType.LAZY)
-	private Mode Mode;
+	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
+	@ManyToOne()
+	private Mode mode;
 	
-	@JsonManagedReference //para evitar entrar en un bucle al enviar la información
+	/*@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
 	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
-	private List<Match> Matches;
+	private List<Match> Matches;*/
 
-	public List<Match> getMatches() {
+	/*public List<Match> getMatches() {
 		return Matches;
-	}
+	}*/
 
-	public void setMatches(List<Match> matches) {
+	/*public void setMatches(List<Match> matches) {
 		Matches = matches;
-	}
+	}*/
 
 	public int getId() {
 		return Id;
@@ -137,11 +135,11 @@ public class Tournament{
 	}
 
 	public Mode getMode() {
-		return Mode;
+		return mode;
 	}
 
 	public void setMode(Mode mode) {
-		Mode = mode;
+		this.mode = mode;
 	}
 	
 }

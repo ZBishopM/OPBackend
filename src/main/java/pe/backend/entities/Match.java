@@ -33,45 +33,45 @@ public class Match{
 	@ApiModelProperty(value="Es la PK de la tabla, entero, auto incremental")
 	private int Id;
 	
-	@JsonBackReference
+	@JsonIgnoreProperties("match")
 	@ManyToOne()
 	@JoinColumn(name = "winner")
 	private Team Winner;
 	
 	private int Fase;
 	
-	@JsonBackReference
+	@JsonIgnoreProperties("match")
 	@NotNull(message = "El team no puede ser nulo")
 	@ManyToOne()
 	@JoinColumn(name = "team1")
 	private Team Team1;
 	
-	@JsonBackReference
+	@JsonIgnoreProperties("match")
 	@NotNull(message = "El team no puede ser nulo")
 	@ManyToOne()
 	@JoinColumn(name = "team2")
 	private Team Team2;
 	
-	@JsonBackReference
+	@JsonIgnoreProperties("match")
 	@NotNull(message = "El torneo no puede ser nulo")
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Tournament Tournament;
 
-	@JsonManagedReference
+	/*@JsonIgnoreProperties("match")
 	@OneToMany(mappedBy="Match", fetch=FetchType.LAZY)
-	private List<Statistics> Statistics;
+	private List<Statistics> Statistics;*/
 	
 	public int getId() {
 		return Id;
 	}
 
-	public List<Statistics> getStatistics() {
+	/*public List<Statistics> getStatistics() {
 		return Statistics;
 	}
 
 	public void setStatistics(List<Statistics> statistics) {
 		Statistics = statistics;
-	}
+	}*/
 
 	public void setId(int id) {
 		Id = id;
