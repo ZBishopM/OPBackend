@@ -10,5 +10,7 @@ import pe.backend.entities.Team;
 @Repository
 public interface TeamRepository 
 				extends JpaRepository<Team, Integer> {
+	
+	public List<Team> getTeamsByTournamentId(int id);
 
 }

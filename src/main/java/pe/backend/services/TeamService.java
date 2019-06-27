@@ -15,6 +15,8 @@ public interface TeamService {
 	
 	public boolean actualizar(Team entity);
 	
-	public boolean eliminar(int id);	
+	public boolean eliminar(int id);
+
+	public List<Team> getTeamsByTournamentId(int id);	
 
 }

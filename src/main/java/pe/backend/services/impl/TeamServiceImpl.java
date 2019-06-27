@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.backend.entities.Player;
 import pe.backend.entities.Team;
 import pe.backend.repositories.TeamRepository;
 import pe.backend.services.TeamService;
@@ -79,5 +80,17 @@ public class TeamServiceImpl implements TeamService {
 		
 		return flag;
 	}
-
+	
+	@Override
+	public List<Team> getTeamsByTournamentId(int id)
+	{
+		List<Team> teams = teamRepo.getTeamsByTournamentId(id);
+		
+		for (int i = 0; i<teams.size(); i++)
+		{
+			teams.get(i).setTournament(null);
+		}
+		return teams;
+		
+	}
 }

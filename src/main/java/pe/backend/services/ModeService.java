@@ -19,6 +19,10 @@ public interface ModeService {
 	
 	public boolean eliminar(int id);
 
-	public Team TrueResults(List<Team> equipos);	
+	public Team TrueResults(List<Team> equipos);
+
+	public String GenerateMatchesMode1(List<Team> equipos, int fase, int TournamentId);
+
+	public List<Team> randomTeams(List<Team> equipos);	
 	
 }

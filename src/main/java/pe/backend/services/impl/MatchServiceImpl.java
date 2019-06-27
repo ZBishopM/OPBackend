@@ -110,19 +110,24 @@ public class MatchServiceImpl implements MatchService {
 				statistics.setDamage(r.ints(1, 5000, 13000).findFirst().getAsInt());
 				statisticsRepo.save(statistics);
 			}
+			System.out.println("Cree las estadisticas 1");
 			
-			List<Player> team2count = playerRepo.getPlayersFromTeamId(matches.get(i).getTeam2().getId());		
+			List<Player> team2count = playerRepo.getPlayersFromTeamId(matches.get(i).getTeam2().getId());
+			
 			for (int j = 0; j<team2count.size(); j++)
 			{
+				System.out.println("Entre a generar");
 				Statistics statistics = new Statistics();
 				statistics.setMatch(matches.get(i));
-				statistics.setPlayer(team1count.get(j));
+				statistics.setPlayer(team2count.get(j));
 				statistics.setKills(r.nextInt(30));
 				statistics.setDeaths(r.ints(1, 2, 15).findFirst().getAsInt());
 				statistics.setAssits(r.ints(1, 10, 40).findFirst().getAsInt());
 				statistics.setDamage(r.ints(1, 5000, 13000).findFirst().getAsInt());
 				statisticsRepo.save(statistics);
-			}	
+				System.out.println("Genere");
+			}
+			System.out.println("Cree las estadisticas 2");
 		}
 		return 0;		
 	}
