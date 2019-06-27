@@ -112,4 +112,27 @@ public class TournamentController{
 			throw new ModeloNotFoundException("Torneo no encontrado");
 		}
 	}
+	
+	@PutMapping(value="/{id}")
+	public ResponseEntity<Tournament> Handler(@PathVariable int id)
+	{
+		try {
+			boolean flag = serviceTournament.Handler(id);
+			System.out.print("Pase el handler de controller");
+			if (flag)
+			{
+				System.out.println("Funciono!!!!!");
+				return new ResponseEntity<Tournament>(HttpStatus.OK);
+			}else
+			{
+				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e)
+		{
+			System.out.print(e.getMessage());
+			System.out.print("Problema con el Controller");
+			return new ResponseEntity<Tournament>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+	}
+	
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import pe.backend.entities.Player;
 import pe.backend.entities.Team;
 import pe.backend.exception.ModeloNotFoundException;
 import pe.backend.services.TeamService;
@@ -109,6 +110,20 @@ public class TeamController{
 			}			
 		} catch (Exception e) {
 			throw new ModeloNotFoundException("Torneo no encontrado");
+		}
+	}
+	
+	@GetMapping(value="/tournament/{id}")
+	public ResponseEntity<List<Team>> buscarPlayersPorTeamID(@PathVariable int id){
+		try {
+			List<Team> entity = teamService.getTeamsByTournamentId(id);
+			if(entity.isEmpty() == false){
+				return new ResponseEntity<List<Team>>(entity, HttpStatus.OK);		
+			}else {
+				throw new ModeloNotFoundException("Jugador no encontrado");
+			}			
+		} catch (Exception e) {
+			throw new ModeloNotFoundException("Jugador no encontrado");
 		}
 	}
 }

@@ -16,6 +16,12 @@ public interface TournamentService {
 	
 	public boolean actualizar(Tournament entity);
 	
-	public boolean eliminar(int id);	
+	public boolean eliminar(int id);
+
+	public boolean CanGenerate(int id);
+
+	public boolean Handler(int tournamentId);
+
+	public String generateMatches(int tournamentId, int fase);	
 	
 }
