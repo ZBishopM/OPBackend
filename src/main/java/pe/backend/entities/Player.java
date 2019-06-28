@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,6 +32,7 @@ import io.swagger.annotations.ApiModelProperty;
 			)
 })
 @ApiModel(value="Representa la tabla player.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Player{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -47,11 +46,6 @@ public class Player{
 	@Size(max=75, min=3, message="El juego preferido debe estar entre 3 y 75 caracteres")
 	private String GamePreferences;
 	
-	@JsonIgnoreProperties("player")	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Team Team;
-	
 
 	@JsonIgnoreProperties("player")
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
@@ -60,8 +54,12 @@ public class Player{
 	@JsonIgnoreProperties("player")
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
 	private List<Tournament> Tournaments;
-
-	@JsonManagedReference
+	
+	@JsonIgnoreProperties("player")	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Team Team;
+	
+	@JsonBackReference
 	public List<Statistics> getStatistics() {
 		return Statistics;
 	}
@@ -82,7 +80,7 @@ public class Player{
 		return Name;
 	}
 
-	@JsonManagedReference
+	@JsonBackReference
 	public List<Tournament> getTournaments() {
 		return Tournaments;
 	}
@@ -104,7 +102,7 @@ public class Player{
 	}
 	
 	
-	@JsonBackReference
+	@JsonManagedReference
 	public Team getTeam() {
 		return Team;
 	}

@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,6 +33,7 @@ import io.swagger.annotations.ApiModelProperty;
 	)
 })*/
 @ApiModel(value="Representa la tabla modos.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Mode{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -63,7 +64,7 @@ public class Mode{
 		Format = format;
 	}
 
-	@JsonManagedReference
+	@JsonBackReference
 	public List<Tournament> getTournaments() {
 		return tournaments;
 	}

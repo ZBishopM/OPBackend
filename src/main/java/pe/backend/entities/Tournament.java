@@ -15,8 +15,6 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,6 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
 	)
 })*/
 @ApiModel(value="Representa la tabla torneos.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Tournament{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -57,25 +56,23 @@ public class Tournament{
 	@NotNull(message = "El valor no puede ser nulo")
 	private int NTeams;
 	
-	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@JsonIgnoreProperties("tournament") 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE) //No estoy seguro de que sea asi, pero debe ser one to one
-	private Player Player;								   //porque un jugador solo puede crear un torneo
+	private Player Player;								   
 	
-	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
-	@ManyToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
+	@JsonIgnoreProperties("tournament") 
+	@ManyToOne(fetch = FetchType.LAZY)	
 	private Mode mode;
 	
-	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@JsonIgnoreProperties("tournament")
 	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
 	private List<Match> Matches;
 	
-	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@JsonIgnoreProperties("tournament")
 	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
-	private List<Team> Teams;
+	private List<Team> Team;
 
-	@JsonManagedReference
+	@JsonBackReference
 	public List<Match> getMatches() {
 		return Matches;
 	}
@@ -89,13 +86,13 @@ public class Tournament{
 		return Id;
 	}
 
-	@JsonManagedReference
-	public List<Team> getTeams() {
-		return Teams;
+	@JsonBackReference
+	public List<Team> getTeam() {
+		return Team;
 	}
 
-	public void setTeams(List<Team> teams) {
-		Teams = teams;
+	public void setTeam(List<Team> team) {
+		Team = team;
 	}
 
 	public void setId(int id) {
@@ -142,7 +139,7 @@ public class Tournament{
 		NTeams = nTeams;
 	}
 
-	@JsonBackReference
+	@JsonManagedReference
 	public Player getPlayer() {
 		return Player;
 	}
@@ -151,7 +148,7 @@ public class Tournament{
 		Player = player;
 	}
 
-	@JsonBackReference
+	@JsonManagedReference
 	public Mode getMode() {
 		return mode;
 	}

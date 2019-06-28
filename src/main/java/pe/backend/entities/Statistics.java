@@ -9,14 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="statistics")
 @ApiModel(value="Representa la tabla statistics.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Statistics{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,7 +48,7 @@ public class Statistics{
 		Id = id;
 	}
 	
-	@JsonBackReference
+	@JsonManagedReference
 	public Match getMatch() {
 		return Match;
 	}
@@ -54,7 +56,7 @@ public class Statistics{
 		Match = match;
 	}
 	
-	@JsonBackReference
+	@JsonManagedReference
 	public Player getPlayer() {
 		return Player;
 	}

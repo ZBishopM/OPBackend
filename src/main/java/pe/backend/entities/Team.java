@@ -16,9 +16,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,9 +33,14 @@ import io.swagger.annotations.ApiModelProperty;
 	@NamedQuery(
 			name = "Team.getPlayerId",
 			query = "select t from Team t join Player p on t.Id = p.Team where p.Id = ?1"
-			)
+			),
+	@NamedQuery(
+			name = "Team.findTeamsWithPartOfName",
+			query = "SELECT t FROM Team t WHERE t.Name LIKE CONCAT('%',:name,'%')"
+	)
 	})
 @ApiModel(value="Representa la tabla team.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Team{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -53,9 +55,8 @@ public class Team{
 	@Min(value = 0, message = "La cantidad de miembros no debe ser menor a 0")
 	private int NMembers;	
 		
-	@JsonIgnoreProperties("team")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
+	
+	@ManyToOne(fetch = FetchType.LAZY)	
 	private Tournament Tournament;
 		
 	
@@ -68,14 +69,6 @@ public class Team{
 		return Id;
 	}
 
-	@JsonManagedReference
-	public List<Player> getPlayers() {
-		return Players;
-	}
-
-	public void setPlayers(List<Player> players) {
-		Players = players;
-	}
 
 	public void setId(int id) {
 		Id = id;
@@ -97,7 +90,7 @@ public class Team{
 		NMembers = nMembers;
 	}
 
-	@JsonBackReference
+	@JsonManagedReference
 	public Tournament getTournament() {
 		return Tournament;
 	}
@@ -106,5 +99,14 @@ public class Team{
 		this.Tournament = Tournament;
 	}
 
+	
+	@JsonBackReference
+	public List<Player> getPlayers() {
+		return Players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		Players = players;
+	}
 
 }

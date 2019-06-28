@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,6 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name="matches")
 @ApiModel(value="Representa la tabla match.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Match{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -53,7 +52,6 @@ public class Match{
 	
 	@JsonIgnoreProperties("match")
 	@NotNull(message = "El torneo no puede ser nulo")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Tournament Tournament;
 
@@ -65,7 +63,7 @@ public class Match{
 		return Id;
 	}
 
-	@JsonManagedReference
+	@JsonBackReference
 	public List<Statistics> getStatistics() {
 		return Statistics;
 	}
@@ -110,7 +108,7 @@ public class Match{
 		Team2 = team2;
 	}
 	
-	@JsonBackReference
+	@JsonManagedReference
 	public Tournament getTournament() {
 		return Tournament;
 	}
