@@ -17,7 +17,7 @@ import pe.backend.services.TournamentService;
 @Service
 public class TournamentServiceImpl implements TournamentService {
 	@Autowired
-	TournamentRepository tournamentRepo;
+	TournamentRepository tournamentRepo;	
 	
 	@Autowired
 	TeamService teamService;
@@ -28,24 +28,50 @@ public class TournamentServiceImpl implements TournamentService {
 	@Override
 	public boolean insertar(Tournament objTournament) {
 		boolean flag = false;
-		try {
-			if(tournamentRepo.save(objTournament) != null) {
-				flag = true;
-			}			
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
-		}
 		
+		
+		if (objTournament.getPlayer() != null)
+		{
+			if (teamService.getPlayerId(objTournament.getPlayer().getId()).isEmpty() == false)
+			{
+				System.out.print("CREADOR CON TEAM -PLAYER ID 3-");
+			}
+			else
+			{					
+				try {
+					if(tournamentRepo.save(objTournament) != null) {				
+						flag = true;				
+					}			
+				}
+				catch (Exception e) {
+					System.out.print(e.getMessage());	
+				}
+				System.out.print("CREADOR SIN TEAM -PLAYER ID 5-");
+			}
+		}
+		else
+		{
+			System.out.print("CREADOR NULO");
+			try {
+					if(tournamentRepo.save(objTournament) != null) {				
+						flag = true;				
+					}			
+				}
+				catch (Exception e) {
+					System.out.print(e.getMessage());	
+				}		
+		}
+
 		return flag;
 	}
 
 	@Override
 	public List<Tournament> listarTodas() {
 		List<Tournament> aux = tournamentRepo.findAll();
-		for(int i=0; i < aux.size();i++)
+		/*for(int i=0; i < aux.size();i++)
 		{
 			aux.get(i).getPlayer().setTeam(null);
-		}
+		}*/
 		return aux;
 	}
 

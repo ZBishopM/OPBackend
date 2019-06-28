@@ -9,15 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -34,7 +33,7 @@ public class Match{
 	private int Id;
 	
 	@JsonIgnoreProperties("match")
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "winner")
 	private Team Winner;
 	
@@ -42,36 +41,38 @@ public class Match{
 	
 	@JsonIgnoreProperties("match")
 	@NotNull(message = "El team no puede ser nulo")
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "team1")
 	private Team Team1;
 	
 	@JsonIgnoreProperties("match")
 	@NotNull(message = "El team no puede ser nulo")
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "team2")
 	private Team Team2;
 	
 	@JsonIgnoreProperties("match")
 	@NotNull(message = "El torneo no puede ser nulo")
+	@NotFound(action = NotFoundAction.IGNORE)
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Tournament Tournament;
 
-	/*@JsonIgnoreProperties("match")
+	@JsonIgnoreProperties("match")
 	@OneToMany(mappedBy="Match", fetch=FetchType.LAZY)
-	private List<Statistics> Statistics;*/
+	private List<Statistics> Statistics;
 	
 	public int getId() {
 		return Id;
 	}
 
-	/*public List<Statistics> getStatistics() {
+	@JsonManagedReference
+	public List<Statistics> getStatistics() {
 		return Statistics;
 	}
 
 	public void setStatistics(List<Statistics> statistics) {
 		Statistics = statistics;
-	}*/
+	}
 
 	public void setId(int id) {
 		Id = id;
@@ -108,7 +109,8 @@ public class Match{
 	public void setTeam2(Team team2) {
 		Team2 = team2;
 	}
-
+	
+	@JsonBackReference
 	public Tournament getTournament() {
 		return Tournament;
 	}

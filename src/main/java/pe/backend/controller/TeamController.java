@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import pe.backend.entities.Player;
 import pe.backend.entities.Team;
 import pe.backend.exception.ModeloNotFoundException;
 import pe.backend.services.TeamService;

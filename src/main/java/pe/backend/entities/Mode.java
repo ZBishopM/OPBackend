@@ -7,14 +7,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -45,9 +43,9 @@ public class Mode{
 	@Size(min = 3, max = 75, message = "El formato debe estar entre 3 y 75 caracteres")
 	private String Format;
 	
-	/*@JsonIgnoreProperties("mode")
+	@JsonIgnoreProperties("mode")
 	@OneToMany(mappedBy="mode", fetch=FetchType.LAZY)
-	private List<Tournament> tournaments;*/
+	private List<Tournament> tournaments;
 
 	public int getId() {
 		return Id;
@@ -65,13 +63,14 @@ public class Mode{
 		Format = format;
 	}
 
-	/*public List<Tournament> getTournaments() {
+	@JsonManagedReference
+	public List<Tournament> getTournaments() {
 		return tournaments;
 	}
 
 	public void setTournaments(List<Tournament> tournaments) {
 		this.tournaments = tournaments;
-	}*/
+	}
 	
 	
 
