@@ -15,8 +15,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -46,10 +48,12 @@ public class Player{
 	private String GamePreferences;
 	
 	@JsonIgnoreProperties("player")	
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Team Team;
 	
-	/*@JsonIgnoreProperties("player")
+
+	@JsonIgnoreProperties("player")
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
 	private List<Statistics> Statistics;
 	
@@ -57,14 +61,14 @@ public class Player{
 	@OneToMany(mappedBy="Player", fetch=FetchType.LAZY)
 	private List<Tournament> Tournaments;
 
-	
+	@JsonManagedReference
 	public List<Statistics> getStatistics() {
 		return Statistics;
-	}*/
+	}
 
-	/*public void setStatistics(List<Statistics> statistics) {
+	public void setStatistics(List<Statistics> statistics) {
 		Statistics = statistics;
-	}*/
+	}
 
 	public int getId() {
 		return Id;
@@ -73,9 +77,18 @@ public class Player{
 	public void setId(int id) {
 		Id = id;
 	}
-
+	
 	public String getName() {
 		return Name;
+	}
+
+	@JsonManagedReference
+	public List<Tournament> getTournaments() {
+		return Tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		Tournaments = tournaments;
 	}
 
 	public void setName(String name) {
@@ -89,7 +102,9 @@ public class Player{
 	public void setGamePreferences(String gamePreferences) {
 		GamePreferences = gamePreferences;
 	}
-
+	
+	
+	@JsonBackReference
 	public Team getTeam() {
 		return Team;
 	}

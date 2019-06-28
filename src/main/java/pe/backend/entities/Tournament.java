@@ -9,15 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -59,27 +58,44 @@ public class Tournament{
 	private int NTeams;
 	
 	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
-	@ManyToOne() //No estoy seguro de que sea asi, pero debe ser one to one
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE) //No estoy seguro de que sea asi, pero debe ser one to one
 	private Player Player;								   //porque un jugador solo puede crear un torneo
 	
 	@JsonIgnoreProperties("tournament")  //para evitar entrar en un bucle al enviar la información
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Mode mode;
 	
-	/*@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
 	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
-	private List<Match> Matches;*/
+	private List<Match> Matches;
+	
+	@JsonIgnoreProperties("tournament") //para evitar entrar en un bucle al enviar la información
+	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
+	private List<Team> Teams;
 
-	/*public List<Match> getMatches() {
+	@JsonManagedReference
+	public List<Match> getMatches() {
 		return Matches;
-	}*/
+	}
 
-	/*public void setMatches(List<Match> matches) {
+	public void setMatches(List<Match> matches) {
 		Matches = matches;
-	}*/
+	}
+
 
 	public int getId() {
 		return Id;
+	}
+
+	@JsonManagedReference
+	public List<Team> getTeams() {
+		return Teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		Teams = teams;
 	}
 
 	public void setId(int id) {
@@ -126,6 +142,7 @@ public class Tournament{
 		NTeams = nTeams;
 	}
 
+	@JsonBackReference
 	public Player getPlayer() {
 		return Player;
 	}
@@ -134,6 +151,7 @@ public class Tournament{
 		Player = player;
 	}
 
+	@JsonBackReference
 	public Mode getMode() {
 		return mode;
 	}

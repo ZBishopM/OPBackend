@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.backend.entities.Player;
 import pe.backend.entities.Team;
 import pe.backend.repositories.TeamRepository;
 import pe.backend.services.TeamService;
@@ -19,14 +18,19 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public boolean insertar(Team entity) {
 		boolean flag = false;
-		try {
-			if(teamRepo.save(entity) != null) {
+		if (teamRepo.findTeamsWithPartOfName(entity.getName())==null)
+		{
+			try
+			{
+				if(teamRepo.save(entity) != null) 
+				{
 				flag = true;
-			}			
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
+				}			
+			} catch (Exception e) 
+				{
+					System.out.print(e.getMessage());
+				}
 		}
-		
 		return flag;
 	}
 
@@ -93,4 +97,20 @@ public class TeamServiceImpl implements TeamService {
 		return teams;
 		
 	}
+
+	@Override
+	public List<Team> findTeamsWithPartOfName(String name) {
+		List<Team> teams = null;
+		teams = teamRepo.findTeamsWithPartOfName(name);
+		return teams;
+	}
+
+	@Override
+	public List<Team> getPlayerId(int id) {
+		List<Team> t = null;
+		t = teamRepo.getPlayerId(id);		
+		return t;
+	}
+
+
 }

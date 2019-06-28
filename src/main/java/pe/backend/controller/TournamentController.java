@@ -50,13 +50,13 @@ public class TournamentController{
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value="Registro de un nuevo torneo")
 	public ResponseEntity<Tournament> insertar(@Valid @RequestBody Tournament objTournament){
-		
+
 		try {
 			boolean flag = serviceTournament.insertar(objTournament);
 			if(flag) {
 				return new ResponseEntity<Tournament>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);
+			}else{				
+				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);				
 			}
 		} catch (Exception e) {
 			System.out.print(e.getMessage());

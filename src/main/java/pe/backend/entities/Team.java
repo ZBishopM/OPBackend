@@ -16,8 +16,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,8 +32,12 @@ import io.swagger.annotations.ApiModelProperty;
 	@NamedQuery(
 			name = "Team.getTeamsByTournamentId",
 			query = "select t from Team t where t.Tournament.Id = ?1"
+			),
+	@NamedQuery(
+			name = "Team.getPlayerId",
+			query = "select t from Team t join Player p on t.Id = p.Team where p.Id = ?1"
 			)
-})
+	})
 @ApiModel(value="Representa la tabla team.")
 public class Team{	
 	@Id
@@ -48,25 +54,28 @@ public class Team{
 	private int NMembers;	
 		
 	@JsonIgnoreProperties("team")
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Tournament Tournament;
+		
 	
-	/*@JsonIgnoreProperties("team")
+	@JsonIgnoreProperties("team")
 	@OneToMany(mappedBy="Team", fetch=FetchType.LAZY)
-	private List<Player> Players;	*/
+	private List<Player> Players;	
 	
 
 	public int getId() {
 		return Id;
 	}
 
-	/*public List<Player> getPlayers() {
+	@JsonManagedReference
+	public List<Player> getPlayers() {
 		return Players;
 	}
 
 	public void setPlayers(List<Player> players) {
 		Players = players;
-	}*/
+	}
 
 	public void setId(int id) {
 		Id = id;
@@ -88,11 +97,14 @@ public class Team{
 		NMembers = nMembers;
 	}
 
+	@JsonBackReference
 	public Tournament getTournament() {
 		return Tournament;
 	}
 
-	public void setTournament(Tournament tournament) {
-		Tournament = tournament;
+	public void setTournament(Tournament Tournament) {
+		this.Tournament = Tournament;
 	}
+
+
 }

@@ -33,7 +33,12 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public List<Player> listarTodas() {
-		return playerRepo.findAll();
+		List<Player> aux = playerRepo.findAll();
+		/*for(int i=0; i < aux.size();i++)
+		{
+			aux.get(i).getTeam().getTournament().getPlayer().setTeam(null);
+		}*/	
+		return aux;
 	}
 
 	@Override
@@ -41,6 +46,7 @@ public class PlayerServiceImpl implements PlayerService {
 		Optional<Player> entity = null;
 		try {
 			entity = playerRepo.findById(id);
+			entity.get().getTeam().getTournament().getPlayer().setTeam(null);
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
@@ -87,10 +93,10 @@ public class PlayerServiceImpl implements PlayerService {
 	{
 		List<Player> players = playerRepo.getPlayersFromTeamId(id);
 		
-		for (int i = 0; i<players.size(); i++)
+		/*for (int i = 0; i<players.size(); i++)
 		{
 			players.get(i).setTeam(null);
-		}
+		}*/
 		return players;
 	}
 	
