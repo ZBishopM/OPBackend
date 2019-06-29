@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,6 +24,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="matches")
+@NamedQueries({
+@NamedQuery(
+		name="Match.MatchesPorTournamentID", 
+		query="SELECT m FROM Match m join Tournament t on m.Tournament = t.Id where t.Id = ?1"
+)
+})
 @ApiModel(value="Representa la tabla match.")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","inspection"})
 public class Match{	

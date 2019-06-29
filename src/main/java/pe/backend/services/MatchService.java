@@ -18,4 +18,6 @@ public interface MatchService {
 	public boolean eliminar(int id);
 
 	public int GenerateMatches1(List<Match> Matches);
+	
+	public List<Match> MatchesPorTournamentID(int id);
 }

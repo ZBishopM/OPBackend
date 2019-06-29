@@ -110,4 +110,20 @@ public class StatisticsController{
 			throw new ModeloNotFoundException("Estadistica no encontrado");
 		}
 	}
+	
+	@GetMapping(value="/player/{id}")
+	@ApiOperation(value="Obtener estadistica de un jugador en base a su ID")
+	public ResponseEntity<List<Statistics>> StatisticsPorPlayerID(@PathVariable int id){
+		try {
+			List<Statistics> entity = statisticsService.StatisticsPorPlayerID(id);
+			if(!entity.isEmpty()){
+				return new ResponseEntity<List<Statistics>>(entity, HttpStatus.OK);				
+			}else {
+				throw new ModeloNotFoundException("Estadisticas no encontradas");
+			}			
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+			return new ResponseEntity<List<Statistics>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
@@ -24,17 +26,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="tournaments")
-/*@NamedQueries({
+@NamedQueries({
 	@NamedQuery(
-			name="Categoria.buscarPorNombre", 
-			query="select c from Categoria c where c.nombre like concat(?1, '%')" // like '%texto%'
-			//query="select c from Categoria c where c.nombre like concat(:nombreParam, '%')" // like '%texto%'
-	),
-	@NamedQuery(
-			name="Categoria.buscarPorEstado", 
-			query="select c from Categoria c where c.estado = ?1"
+			name="Tournament.FindTournamentByName", 
+			query="select t from Tournament t where t.Name = ?1"
 	)
-})*/
+})
 @ApiModel(value="Representa la tabla torneos.")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","inpesction"})
 public class Tournament{	

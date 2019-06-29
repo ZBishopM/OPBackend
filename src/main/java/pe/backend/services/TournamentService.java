@@ -24,4 +24,6 @@ public interface TournamentService {
 
 	public String generateMatches(int tournamentId, int fase);	
 	
+	public List<Tournament> FindTournamentByName(String name);
+	
 }

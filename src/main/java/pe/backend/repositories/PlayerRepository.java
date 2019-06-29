@@ -11,7 +11,7 @@ import pe.backend.entities.Player;
 public interface PlayerRepository 
 				extends JpaRepository<Player, Integer> {
 	
-	public List<Player> getPlayersFromTeamId(int id);	
+	public List<Player> getPlayersFromTeamId(int id);		
 	
 
 }

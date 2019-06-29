@@ -131,4 +131,11 @@ public class MatchServiceImpl implements MatchService {
 		}
 		return 0;		
 	}
+
+	@Override
+	public List<Match> MatchesPorTournamentID(int id) {
+		List<Match> matches = null;
+		matches = matchRepo.MatchesPorTournamentID(id);		
+		return matches;
+	}
 }

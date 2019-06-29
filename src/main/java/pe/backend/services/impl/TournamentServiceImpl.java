@@ -29,8 +29,10 @@ public class TournamentServiceImpl implements TournamentService {
 	public boolean insertar(Tournament objTournament) {
 		boolean flag = false;
 		
+		if (tournamentRepo.FindTournamentByName(objTournament.getName()).isEmpty())
+		{
 		
-		if (objTournament.getPlayer() != null)
+		if (objTournament.getPlayer() != null )
 		{
 			if (teamService.getPlayerId(objTournament.getPlayer().getId()).isEmpty() == false)
 			{
@@ -60,6 +62,12 @@ public class TournamentServiceImpl implements TournamentService {
 				catch (Exception e) {
 					System.out.print(e.getMessage());	
 				}		
+		}
+		
+		}
+		else
+		{
+			System.out.print("EXISTE TORNEO CON EL MISMO NOMBRE");
 		}
 
 		return flag;
@@ -181,6 +189,13 @@ public class TournamentServiceImpl implements TournamentService {
 			}
 		
 		}
+	}
+
+	@Override
+	public List<Tournament> FindTournamentByName(String name) {
+		List<Tournament> tournaments = null;
+		tournaments = tournamentRepo.FindTournamentByName(name);
+		return tournaments;
 	}
 
 }

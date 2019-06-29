@@ -3,6 +3,7 @@ package pe.backend.services;
 import java.util.List;
 import java.util.Optional;
 
+import pe.backend.entities.Player;
 import pe.backend.entities.Statistics;
 
 public interface StatisticsService {
@@ -17,4 +18,5 @@ public interface StatisticsService {
 	
 	public boolean eliminar(int id);
 
+	public List<Statistics> StatisticsPorPlayerID(int id);
 }

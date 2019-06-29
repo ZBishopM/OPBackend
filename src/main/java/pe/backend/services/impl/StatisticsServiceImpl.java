@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.backend.entities.Player;
 import pe.backend.entities.Statistics;
 import pe.backend.repositories.StatisticsRepository;
 import pe.backend.services.StatisticsService;
@@ -80,6 +81,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		
 		return flag;
+	}
+
+	@Override
+	public List<Statistics> StatisticsPorPlayerID(int id) {
+		List<Statistics> statistics = null;
+		statistics = statisticsRepo.StatisticsPorPlayerID(id);
+		return statistics;
 	}
 
 }

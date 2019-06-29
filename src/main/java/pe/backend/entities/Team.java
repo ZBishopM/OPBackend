@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
 			),
 	@NamedQuery(
 			name = "Team.findTeamsWithPartOfName",
-			query = "SELECT t FROM Team t WHERE t.Name LIKE CONCAT('%',:name,'%')"
+			query = "SELECT t FROM Team t WHERE t.Name =:name"
 	)
 	})
 @ApiModel(value="Representa la tabla team.")

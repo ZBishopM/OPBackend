@@ -110,4 +110,19 @@ public class MatchController{
 			throw new ModeloNotFoundException("Torneo no encontrado");
 		}
 	}
+	@GetMapping(value="/tournament/{id}")
+	@ApiOperation(value="Obtener las match de un torneo en base a su ID")
+	public ResponseEntity<List<Match>> MatchesByTournamentID(@PathVariable int id){
+		try {
+			List<Match> entity = matchService.MatchesPorTournamentID(id);
+			if(!entity.isEmpty()){
+				return new ResponseEntity<List<Match>>(entity, HttpStatus.OK);				
+			}else {
+				throw new ModeloNotFoundException("Matches no encontradas");				
+			}			
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+			return new ResponseEntity<List<Match>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
