@@ -49,51 +49,42 @@ public class PlayerController{
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value="Registro de un nuevo jugador")
-	public ResponseEntity<Player> insertar(@Valid @RequestBody Player entity){
+	public ResponseEntity insertar(@Valid @RequestBody Player entity){
 		
 		try {
-			boolean flag = playerService.insertar(entity);
-			if(flag) {
-				return new ResponseEntity<Player>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Player>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(this.playerService.insertar(entity));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en insertar, player controller");
 		}
 	}
 	
 	@ApiOperation(value="Eliminar un jugador")
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Player> eliminar(@PathVariable int id){
+	public ResponseEntity eliminar(@PathVariable int id){
 		try {
-			boolean flag = playerService.eliminar(id);
-			if(flag){
-				return new ResponseEntity<Player>(HttpStatus.OK);				
-			}else {
-				return new ResponseEntity<Player>(HttpStatus.NOT_FOUND);
-			}			
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(playerService.eliminar(id));		
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en eliminar, player controller");
 		}
 	}
 	
 	@PutMapping
 	@ApiOperation(value="Actualizar un jugador")
-	public ResponseEntity<Player> actualizar(@RequestBody Player entity){
+	public ResponseEntity actualizar(@RequestBody Player entity){
 		
 		try {
-			boolean flag = playerService.actualizar(entity);
-			if(flag) {
-				return new ResponseEntity<Player>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Player>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(playerService.actualizar(entity));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en actualizar, player controller");
 		}
 	}
 	

@@ -49,51 +49,43 @@ public class TournamentController{
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value="Registro de un nuevo torneo")
-	public ResponseEntity<Tournament> insertar(@Valid @RequestBody Tournament objTournament){
+	public ResponseEntity insertar(@Valid @RequestBody Tournament objTournament){
 
 		try {
-			boolean flag = serviceTournament.insertar(objTournament);
-			if(flag) {
-				return new ResponseEntity<Tournament>(HttpStatus.OK);
-			}else{				
-				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);				
-			}
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(this.serviceTournament.insertar(objTournament));
+			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Tournament>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error de insertar en el controlador de torneo");
 		}
 	}
 	
 	@ApiOperation(value="Eliminar un torneo")
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Tournament> eliminar(@PathVariable int id){
+	public ResponseEntity eliminar(@PathVariable int id){
 		try {
-			boolean flag = serviceTournament.eliminar(id);
-			if(flag){
-				return new ResponseEntity<Tournament>(HttpStatus.OK);				
-			}else {
-				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);
-			}			
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(serviceTournament.eliminar(id));			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Tournament>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error de eliminar en el controlador de torneo");
 		}
 	}
 	
 	@PutMapping
 	@ApiOperation(value="Actualizar un torneo")
-	public ResponseEntity<Tournament> actualizar(@RequestBody Tournament objTournament){
+	public ResponseEntity actualizar(@RequestBody Tournament objTournament){
 		
 		try {
-			boolean flag = serviceTournament.actualizar(objTournament);
-			if(flag) {
-				return new ResponseEntity<Tournament>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(serviceTournament.actualizar(objTournament));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Tournament>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error de actualizar en el controlador del torneo");
 		}
 	}
 	
@@ -114,24 +106,19 @@ public class TournamentController{
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Tournament> Handler(@PathVariable int id)
+	public ResponseEntity Handler(@PathVariable int id)
 	{
 		try {
-			boolean flag = serviceTournament.Handler(id);
 			System.out.print("Pase el handler de controller");
-			if (flag)
-			{
-				System.out.println("Funciono!!!!!");
-				return new ResponseEntity<Tournament>(HttpStatus.OK);
-			}else
-			{
-				return new ResponseEntity<Tournament>(HttpStatus.NOT_FOUND);
-			}
+			System.out.println("Funciono!!!!!");
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(serviceTournament.Handler(id));
 		} catch (Exception e)
 		{
 			System.out.print(e.getMessage());
 			System.out.print("Problema con el Controller");
-			return new ResponseEntity<Tournament>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el handler, controlador de tournament");
 		}	
 	}
 	

@@ -49,51 +49,42 @@ public class ModeController{
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value="Registro de un nuevo modo")
-	public ResponseEntity<Mode> insertar(@Valid @RequestBody Mode objMode){
+	public ResponseEntity insertar(@Valid @RequestBody Mode objMode){
 		
 		try {
-			boolean flag = serviceMode.insertar(objMode);
-			if(flag) {
-				return new ResponseEntity<Mode>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Mode>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(this.serviceMode.insertar(objMode));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Mode>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en insertar, mode controller");
 		}
 	}
 	
 	@ApiOperation(value="Eliminar un modo")
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Mode> eliminar(@PathVariable int id){
+	public ResponseEntity eliminar(@PathVariable int id){
 		try {
-			boolean flag = serviceMode.eliminar(id);
-			if(flag){
-				return new ResponseEntity<Mode>(HttpStatus.OK);				
-			}else {
-				return new ResponseEntity<Mode>(HttpStatus.NOT_FOUND);
-			}			
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(serviceMode.eliminar(id));			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Mode>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en eliminar, mode controller");
 		}
 	}
 	
 	@PutMapping
 	@ApiOperation(value="Actualizar un torneo")
-	public ResponseEntity<Mode> actualizar(@RequestBody Mode objMode){
+	public ResponseEntity actualizar(@RequestBody Mode objMode){
 		
 		try {
-			boolean flag = serviceMode.actualizar(objMode);
-			if(flag) {
-				return new ResponseEntity<Mode>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Mode>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(serviceMode.actualizar(objMode));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Mode>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en actualizar, mode controller");
 		}
 	}
 	

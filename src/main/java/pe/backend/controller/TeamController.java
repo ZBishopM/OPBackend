@@ -49,51 +49,42 @@ public class TeamController{
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value="Registro de un nuevo equipo")
-	public ResponseEntity<Team> insertar(@Valid @RequestBody Team entity){
+	public ResponseEntity insertar(@Valid @RequestBody Team entity){
 		
 		try {
-			boolean flag = teamService.insertar(entity);
-			if(flag) {
-				return new ResponseEntity<Team>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Team>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(this.teamService.insertar(entity));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Team>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en insertar, teamcontroller");
 		}
 	}
 	
 	@ApiOperation(value="Eliminar un equipo")
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Team> eliminar(@PathVariable int id){
+	public ResponseEntity eliminar(@PathVariable int id){
 		try {
-			boolean flag = teamService.eliminar(id);
-			if(flag){
-				return new ResponseEntity<Team>(HttpStatus.OK);				
-			}else {
-				return new ResponseEntity<Team>(HttpStatus.NOT_FOUND);
-			}			
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(teamService.eliminar(id));				
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Team>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en eliminar, teamcontroller");
 		}
 	}
 	
 	@PutMapping
 	@ApiOperation(value="Actualizar un equipo")
-	public ResponseEntity<Team> actualizar(@RequestBody Team entity){
+	public ResponseEntity actualizar(@RequestBody Team entity){
 		
 		try {
-			boolean flag = teamService.actualizar(entity);
-			if(flag) {
-				return new ResponseEntity<Team>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Team>(HttpStatus.NOT_FOUND);
-			}
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(teamService.actualizar(entity));
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
-			return new ResponseEntity<Team>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en actualizar, teamcontroller");
 		}
 	}
 	
