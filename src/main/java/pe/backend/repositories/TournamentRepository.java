@@ -13,4 +13,5 @@ public interface TournamentRepository
 	
 	public List<Tournament> FindTournamentByName(String name);
 
+	public Tournament findByHostId(int id);
 }

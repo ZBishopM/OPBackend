@@ -122,8 +122,11 @@ public class ModeServiceImpl implements ModeService {
 			randomNumbers.add(number);
 			int k = number;
 			Team team = equipos.get(k);
+			System.out.println(team.getId());
 			equipos.set(k, equipos.get(n));
+			System.out.println(equipos.get(k).getId());
 			equipos.set(n, team);
+			System.out.println(equipos.get(n).getId());
 		}
 		return equipos;
 	}
@@ -179,7 +182,6 @@ public class ModeServiceImpl implements ModeService {
 				matchRepo.insertar(matches.get(i));
 				System.out.println("Inserte matches");
 			}
-			System.out.println("El problema son las estadisticas");
 			matchRepo.GenerateMatches1(matches);
 			System.out.println("Cree las estadisticas");
 		}

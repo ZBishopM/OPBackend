@@ -30,6 +30,10 @@ import io.swagger.annotations.ApiModelProperty;
 	@NamedQuery(
 			name="Tournament.FindTournamentByName", 
 			query="select t from Tournament t where t.Name = ?1"
+	),
+	@NamedQuery(
+			name = "Tournament.findByHostId",
+			query = "select t from Tournament t join Player p on p.Id = t.Player where p.Id = ?1"
 	)
 })
 @ApiModel(value="Representa la tabla torneos.")
@@ -135,7 +139,6 @@ public class Tournament{
 		NTeams = nTeams;
 	}
 
-	//@JsonManagedReference(value="player-tournament")
 	public Player getPlayer() {
 		return Player;
 	}
@@ -144,7 +147,6 @@ public class Tournament{
 		Player = player;
 	}
 
-	//@JsonManagedReference(value="mode-tournament")
 	public Mode getMode() {
 		return mode;
 	}

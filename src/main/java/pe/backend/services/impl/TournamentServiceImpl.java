@@ -31,45 +31,25 @@ public class TournamentServiceImpl implements TournamentService {
 		
 		if (tournamentRepo.FindTournamentByName(objTournament.getName()).isEmpty())
 		{
-		
-		if (objTournament.getPlayer() != null )
-		{
-			if (teamService.getPlayerId(objTournament.getPlayer().getId()).isEmpty() == false)
+			if (tournamentRepo.findByHostId(objTournament.getPlayer().getId()) != null)
 			{
-				System.out.print("CREADOR CON TEAM -PLAYER ID 3-");
+				System.out.print("Host ya tiene un torneo");
 			}
 			else
 			{					
 				try {
 					if(tournamentRepo.save(objTournament) != null) {				
-						flag = true;				
+						flag = true;			
 					}			
 				}
 				catch (Exception e) {
-					System.out.print(e.getMessage());	
+					System.out.print(e.getMessage());
+					return flag;
 				}
-				System.out.print("CREADOR SIN TEAM -PLAYER ID 5-");
 			}
 		}
-		else
-		{
-			System.out.print("CREADOR NULO");
-			try {
-					if(tournamentRepo.save(objTournament) != null) {				
-						flag = true;				
-					}			
-				}
-				catch (Exception e) {
-					System.out.print(e.getMessage());	
-				}		
-		}
+		else {System.out.println("EXISTE TORNEO CON EL MISMO NOMBRE");}
 		
-		}
-		else
-		{
-			System.out.print("EXISTE TORNEO CON EL MISMO NOMBRE");
-		}
-
 		return flag;
 	}
 
@@ -150,7 +130,6 @@ public class TournamentServiceImpl implements TournamentService {
 		String winner;
 		if (CanGenerate(tournamentId))
 		{
-			System.out.print("Pase canGenerate");
 			winner = this.generateMatches(tournamentId, 1);
 			System.out.print("Pase generateMatches");
 			Tournament auxTournament = tournamentRepo.findById(tournamentId).get();
@@ -166,26 +145,17 @@ public class TournamentServiceImpl implements TournamentService {
 	{
 		Tournament tournament = this.buscarPorID(tournamentId).get();
 		List<Team> auxTeams = teamService.getTeamsByTournamentId(tournamentId);
-		List<Team> teams = new ArrayList<Team>();
-		for (int i = 0; i < auxTeams.size(); i++)
-		{
-			Team team = new Team();
-			team.setId(auxTeams.get(i).getId());
-			team.setName(auxTeams.get(i).getName());
-			team.setNMembers(auxTeams.get(i).getNMembers());
-			teams.add(team);
-			System.out.print("Cree el arreglo de teams");
-		}
+		
 		switch (tournament.getMode().getId())
 		{
 			case 1:
 			{
 				System.out.print("Caso 1");
-				return modeService.GenerateMatchesMode1(teams, fase, tournamentId);
+				return modeService.GenerateMatchesMode1(auxTeams, fase, tournamentId);
 			}	
 			default:
 			{
-				return modeService.GenerateMatchesMode1(teams, fase, tournamentId);
+				return modeService.GenerateMatchesMode1(auxTeams, fase, tournamentId);
 			}
 		
 		}
@@ -196,6 +166,13 @@ public class TournamentServiceImpl implements TournamentService {
 		List<Tournament> tournaments = null;
 		tournaments = tournamentRepo.FindTournamentByName(name);
 		return tournaments;
+	}
+
+	@Override
+	public Tournament findByHostId(int id) {
+		Tournament tournament = new Tournament();
+		tournament = tournamentRepo.findByHostId(id);
+		return tournament;
 	}
 
 }

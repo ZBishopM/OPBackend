@@ -21,17 +21,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="modes")
-/*@NamedQueries({
-	@NamedQuery(
-			name="Categoria.buscarPorNombre", 
-			query="select c from Categoria c where c.nombre like concat(?1, '%')" // like '%texto%'
-			//query="select c from Categoria c where c.nombre like concat(:nombreParam, '%')" // like '%texto%'
-	),
-	@NamedQuery(
-			name="Categoria.buscarPorEstado", 
-			query="select c from Categoria c where c.estado = ?1"
-	)
-})*/
 @ApiModel(value="Representa la tabla modos.")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","inspection"})
 public class Mode{	

@@ -13,5 +13,7 @@ public interface StatisticsRepository
 				extends JpaRepository<Statistics, Integer> {
 	
 	public List<Statistics> StatisticsPorPlayerID(int id);
+	
+	public List<Statistics> statisticsByMatchId(int id);
 
 }

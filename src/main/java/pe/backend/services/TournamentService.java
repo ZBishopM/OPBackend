@@ -26,4 +26,6 @@ public interface TournamentService {
 	
 	public List<Tournament> FindTournamentByName(String name);
 	
+	public Tournament findByHostId(int id);
+	
 }

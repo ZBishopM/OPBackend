@@ -89,7 +89,6 @@ public class Team{
 		NMembers = nMembers;
 	}
 
-	//@JsonManagedReference(value="team-tournament")
 	public Tournament getTournament() {
 		return Tournament;
 	}

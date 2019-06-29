@@ -7,30 +7,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.backend.entities.Team;
+import pe.backend.entities.Tournament;
 import pe.backend.repositories.TeamRepository;
 import pe.backend.services.TeamService;
+import pe.backend.services.TournamentService;
 
 @Service
 public class TeamServiceImpl implements TeamService {
 	@Autowired
 	TeamRepository teamRepo;
+	
+	@Autowired
+	TournamentService tournamentService;
 
 	@Override
 	public boolean insertar(Team entity) {
 		boolean flag = false;
-		if (teamRepo.findTeamsWithPartOfName(entity.getName())==null)
+		if (teamRepo.findTeamsWithPartOfName(entity.getName()).isEmpty())
 		{
 			try
 			{
 				if(teamRepo.save(entity) != null) 
 				{
-				flag = true;
+					Tournament tournament = new Tournament();
+					tournament = tournamentService.buscarPorID(entity.getTournament().getId()).get();
+					tournament.setNTeams(tournament.getNTeams()+1);
+					tournamentService.actualizar(tournament);
+				
+					flag = true;
 				}			
 			} catch (Exception e) 
 				{
 					System.out.print(e.getMessage());
 				}
-		}
+		} else {System.out.println("Ese nombre ya existe");}
 		return flag;
 	}
 
@@ -89,13 +99,7 @@ public class TeamServiceImpl implements TeamService {
 	public List<Team> getTeamsByTournamentId(int id)
 	{
 		List<Team> teams = teamRepo.getTeamsByTournamentId(id);
-		
-		for (int i = 0; i<teams.size(); i++)
-		{
-			teams.get(i).setTournament(null);
-		}
-		return teams;
-		
+		return teams;	
 	}
 
 	@Override

@@ -13,5 +13,6 @@ public interface PlayerRepository
 	
 	public List<Player> getPlayersFromTeamId(int id);		
 	
+	public Player findPlayerByName(String name);
 
 }

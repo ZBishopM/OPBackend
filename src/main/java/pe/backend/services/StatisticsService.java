@@ -19,4 +19,6 @@ public interface StatisticsService {
 	public boolean eliminar(int id);
 
 	public List<Statistics> StatisticsPorPlayerID(int id);
+	
+	public List<Statistics> statisticsByMatchId(int id);
 }

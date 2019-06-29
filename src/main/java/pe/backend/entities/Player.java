@@ -28,6 +28,10 @@ import io.swagger.annotations.ApiModelProperty;
 	@NamedQuery(
 			name = "Player.getPlayersFromTeamId",
 			query = "select p from Player p where p.Team.Id = ?1"
+			),
+	@NamedQuery(
+			name = "Player.findPlayerByName",
+			query = "SELECT p from Player p where p.Name = ?1"
 			)
 })
 @ApiModel(value="Representa la tabla player.")
@@ -100,8 +104,6 @@ public class Player{
 		GamePreferences = gamePreferences;
 	}
 	
-	
-	//@JsonManagedReference(value="player-team")
 	public Team getTeam() {
 		return Team;
 	}

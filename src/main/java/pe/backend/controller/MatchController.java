@@ -79,23 +79,6 @@ public class MatchController{
 		}
 	}
 	
-	/*@PutMapping
-	@ApiOperation(value="Actualizar un Match")
-	public ResponseEntity<Match> actualizar(@RequestBody Match entity){
-		
-		try {
-			boolean flag = matchService.actualizar(entity);
-			if(flag) {
-				return new ResponseEntity<Match>(HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Match>(HttpStatus.NOT_FOUND);
-			}
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
-			return new ResponseEntity<Match>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}*/
-	
 	@GetMapping(value="/{id}")
 	@ApiOperation(value="Obtener un torneo en base a su ID")
 	public ResponseEntity<Match> buscarPorID(@PathVariable int id){

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.backend.entities.Player;
+import pe.backend.entities.Team;
 import pe.backend.repositories.PlayerRepository;
 import pe.backend.services.PlayerService;
+import pe.backend.services.TeamService;
 
 
 @Service
@@ -16,28 +18,35 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Autowired
 	PlayerRepository playerRepo;
+	
+	@Autowired
+	TeamService teamService;
 
 	@Override
 	public boolean insertar(Player entity) {
 		boolean flag = false;
-		try {
-			if(playerRepo.save(entity) != null) {
-				flag = true;
-			}			
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
-		}
+		if (playerRepo.findPlayerByName(entity.getName())==null)
+		{
+			try {
+				if(playerRepo.save(entity) != null) {
+					Team team = new Team();
+					team = teamService.buscarPorID(entity.getTeam().getId()).get();
+					team.setNMembers(team.getNMembers()+1);
+					teamService.actualizar(team);			
+					System.out.println(team.getNMembers());
+					flag = true;
+				}			
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {System.out.println("Jugador con el mismo nombre");}
 		
 		return flag;
 	}
 
 	@Override
 	public List<Player> listarTodas() {
-		List<Player> aux = playerRepo.findAll();
-		/*for(int i=0; i < aux.size();i++)
-		{
-			aux.get(i).getTeam().getTournament().getPlayer().setTeam(null);
-		}*/	
+		List<Player> aux = playerRepo.findAll();	
 		return aux;
 	}
 
@@ -92,12 +101,14 @@ public class PlayerServiceImpl implements PlayerService {
 	public List<Player> getPlayersFromTeamId(int id)
 	{
 		List<Player> players = playerRepo.getPlayersFromTeamId(id);
-		
-		/*for (int i = 0; i<players.size(); i++)
-		{
-			players.get(i).setTeam(null);
-		}*/
 		return players;
+	}
+
+	@Override
+	public Player findPlayerByName(String name) {
+		Player player = new Player();
+		player = playerRepo.findPlayerByName(name);
+		return player;
 	}
 	
 	

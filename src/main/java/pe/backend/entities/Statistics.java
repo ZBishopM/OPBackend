@@ -24,6 +24,10 @@ import io.swagger.annotations.ApiModelProperty;
 @NamedQuery(
 		name="Statistics.StatisticsPorPlayerID", 
 		query="SELECT s FROM Statistics s join Player p on s.Player = p.Id where p.Id = ?1"
+),
+@NamedQuery(
+		name = "Statistics.statisticsByMatchId",
+		query = "SELECT s from Statistics s join Match m on s.Match = m.Id where m.Id = ?1"
 )
 })
 public class Statistics{	
@@ -55,7 +59,6 @@ public class Statistics{
 		Id = id;
 	}
 	
-	//@JsonManagedReference(value="match-statistics")
 	public Match getMatch() {
 		return Match;
 	}
@@ -63,7 +66,6 @@ public class Statistics{
 		Match = match;
 	}
 	
-	//@JsonManagedReference(value="player-statistics")
 	public Player getPlayer() {
 		return Player;
 	}

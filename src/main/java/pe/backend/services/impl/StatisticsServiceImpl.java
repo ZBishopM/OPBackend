@@ -90,4 +90,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 		return statistics;
 	}
 
+	@Override
+	public List<Statistics> statisticsByMatchId(int id) {
+		List<Statistics> statistics = null;
+		statistics = statisticsRepo.statisticsByMatchId(id);
+		return statistics;
+	}
+
 }
