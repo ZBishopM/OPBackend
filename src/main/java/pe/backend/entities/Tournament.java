@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
 	)
 })*/
 @ApiModel(value="Representa la tabla torneos.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","inpesction"})
 public class Tournament{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -72,7 +72,7 @@ public class Tournament{
 	@OneToMany(mappedBy="Tournament", fetch=FetchType.LAZY)
 	private List<Team> Team;
 
-	@JsonBackReference
+	@JsonBackReference(value="match-tournament")
 	public List<Match> getMatches() {
 		return Matches;
 	}
@@ -86,7 +86,7 @@ public class Tournament{
 		return Id;
 	}
 
-	@JsonBackReference
+	@JsonBackReference(value="team-tournament")
 	public List<Team> getTeam() {
 		return Team;
 	}
@@ -139,7 +139,7 @@ public class Tournament{
 		NTeams = nTeams;
 	}
 
-	@JsonManagedReference
+	//@JsonManagedReference(value="player-tournament")
 	public Player getPlayer() {
 		return Player;
 	}
@@ -148,7 +148,7 @@ public class Tournament{
 		Player = player;
 	}
 
-	@JsonManagedReference
+	//@JsonManagedReference(value="mode-tournament")
 	public Mode getMode() {
 		return mode;
 	}

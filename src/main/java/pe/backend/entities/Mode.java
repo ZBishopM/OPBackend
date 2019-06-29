@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiModelProperty;
 	)
 })*/
 @ApiModel(value="Representa la tabla modos.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","inspection"})
 public class Mode{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -64,7 +64,7 @@ public class Mode{
 		Format = format;
 	}
 
-	@JsonBackReference
+	@JsonBackReference(value="mode-tournament")
 	public List<Tournament> getTournaments() {
 		return tournaments;
 	}

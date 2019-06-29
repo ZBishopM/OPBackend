@@ -40,7 +40,7 @@ import io.swagger.annotations.ApiModelProperty;
 	)
 	})
 @ApiModel(value="Representa la tabla team.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","inspection"})
 public class Team{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -90,7 +90,7 @@ public class Team{
 		NMembers = nMembers;
 	}
 
-	@JsonManagedReference
+	//@JsonManagedReference(value="team-tournament")
 	public Tournament getTournament() {
 		return Tournament;
 	}
@@ -100,7 +100,7 @@ public class Team{
 	}
 
 	
-	@JsonBackReference
+	@JsonBackReference(value="player-team")
 	public List<Player> getPlayers() {
 		return Players;
 	}

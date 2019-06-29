@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name="statistics")
 @ApiModel(value="Representa la tabla statistics.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","inspection"})
 public class Statistics{	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class Statistics{
 		Id = id;
 	}
 	
-	@JsonManagedReference
+	//@JsonManagedReference(value="match-statistics")
 	public Match getMatch() {
 		return Match;
 	}
@@ -56,7 +56,7 @@ public class Statistics{
 		Match = match;
 	}
 	
-	@JsonManagedReference
+	//@JsonManagedReference(value="player-statistics")
 	public Player getPlayer() {
 		return Player;
 	}
