@@ -68,10 +68,6 @@ public class TournamentServiceImpl implements TournamentService {
 	@Override
 	public List<Tournament> listarTodas() {
 		List<Tournament> aux = tournamentRepo.findAll();
-		/*for(int i=0; i < aux.size();i++)
-		{
-			aux.get(i).getPlayer().setTeam(null);
-		}*/
 		return aux;
 	}
 
