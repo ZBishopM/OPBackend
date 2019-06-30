@@ -78,7 +78,7 @@ public class TournamentServiceImpl implements TournamentService {
 	public boolean actualizar(Tournament objTournament) {
 		boolean flag = false;
 		try {
-			if( objTournament.getId() >1) { 
+			if( objTournament.getId() >=1) { 
 				if(tournamentRepo.save(objTournament) != null) {
 					flag = true;
 				}	
