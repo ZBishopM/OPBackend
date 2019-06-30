@@ -1,6 +1,7 @@
 package pe.backend.services.impl;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,7 +70,7 @@ public class TournamentServiceImpl implements TournamentService {
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
-		
+		System.out.println(objTournament.get().getDate());
 		return objTournament;
 	}
 
