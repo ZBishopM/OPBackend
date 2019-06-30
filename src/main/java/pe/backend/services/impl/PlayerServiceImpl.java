@@ -68,7 +68,12 @@ public class PlayerServiceImpl implements PlayerService {
 	public boolean actualizar(Player entity) {
 		boolean flag = false;
 		
-		Integer teamId = entity.getTeam().getId();
+		Integer teamId = null;
+		if (entity.getTeam() != null)
+		{
+			teamId = entity.getTeam().getId(); 
+		}
+
 		System.out.println(teamId);
 		Integer auxId = null;
 		
@@ -80,7 +85,7 @@ public class PlayerServiceImpl implements PlayerService {
 		System.out.println(auxId);
 		
 		try {
-			if( entity.getId() >=1) {
+			if (entity.getId() >= 1) {
 				if (playerRepo.save(entity) != null) {
 					flag = true;
 					if (auxId != null) {
@@ -91,16 +96,15 @@ public class PlayerServiceImpl implements PlayerService {
 					}
 					System.out.println(entity.getTeam().getId());
 					Integer newId = entity.getTeam().getId();
-					if (newId != auxId)
-					{
+					if (newId != auxId) {
 						System.out.println("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-							Team newTeam = new Team();
-							newTeam = teamService.buscarPorID(entity.getTeam().getId()).get();
-							newTeam.setNMembers(newTeam.getNMembers() + 1);
-							teamService.actualizar(newTeam);
+						Team newTeam = new Team();
+						newTeam = teamService.buscarPorID(entity.getTeam().getId()).get();
+						newTeam.setNMembers(newTeam.getNMembers() + 1);
+						teamService.actualizar(newTeam);
+					}
 				}
-			}	
-		}				
+			}				
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
