@@ -29,12 +29,12 @@ public class PlayerServiceImpl implements PlayerService {
 		{
 			try {
 				if(playerRepo.save(entity) != null) {
+					flag = true;
 					Team team = new Team();
 					team = teamService.buscarPorID(entity.getTeam().getId()).get();
 					team.setNMembers(team.getNMembers()+1);
 					teamService.actualizar(team);			
-					System.out.println(team.getNMembers());
-					flag = true;
+					System.out.println(team.getNMembers());	
 				}			
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
