@@ -3,7 +3,6 @@ package pe.backend.services;
 import java.util.List;
 import java.util.Optional;
 
-import pe.backend.entities.Player;
 import pe.backend.entities.Statistics;
 
 public interface StatisticsService {

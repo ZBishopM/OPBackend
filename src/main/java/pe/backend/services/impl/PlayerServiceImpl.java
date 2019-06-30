@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import pe.backend.entities.Player;
 import pe.backend.entities.Team;
+import pe.backend.entities.Tournament;
 import pe.backend.repositories.PlayerRepository;
 import pe.backend.services.PlayerService;
 import pe.backend.services.TeamService;
@@ -67,10 +68,25 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public boolean actualizar(Player entity) {
 		boolean flag = false;
+		
+		int auxId = this.buscarPorID(entity.getId()).get().getTeam().getId();
 		try {
-			if( entity.getId() >1) {
+			if( entity.getId() >=1) {
 				if(playerRepo.save(entity) != null) {
 					flag = true;
+					
+					if (entity.getTeam().getId() != auxId) {
+
+						Team oldTeam = new Team();
+						oldTeam = teamService.buscarPorID(auxId).get();
+						oldTeam.setNMembers(oldTeam.getNMembers() - 1);
+						teamService.actualizar(oldTeam);
+
+						Team newTeam = new Team();
+						newTeam = teamService.buscarPorID(entity.getTeam().getId()).get();
+						newTeam.setNMembers(newTeam.getNMembers() + 1);
+						teamService.actualizar(newTeam);
+					}
 				}	
 			}					
 		} catch (Exception e) {
@@ -83,9 +99,16 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public boolean eliminar(int id) {
 		boolean flag = false;
+		int auxId = this.buscarPorID(id).get().getTeam().getId();
 		try {
 			if(id>1) { 
 				playerRepo.deleteById(id);
+				
+				Team team = new Team();
+				team = teamService.buscarPorID(auxId).get();
+				team.setNMembers(team.getNMembers()-1);
+				teamService.actualizar(team);
+				
 				flag = true;
 			}else {
 				flag = false;
