@@ -132,7 +132,9 @@ public class TournamentServiceImpl implements TournamentService {
 		if (CanGenerate(tournamentId))
 		{
 			winner = this.generateMatches(tournamentId, 1);
-			System.out.print("Pase generateMatches");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println(winner);
+			System.out.println("Pase generateMatches");
 			Tournament auxTournament = tournamentRepo.findById(tournamentId).get();
 			auxTournament.setWinner(winner);
 			this.actualizar(auxTournament);
