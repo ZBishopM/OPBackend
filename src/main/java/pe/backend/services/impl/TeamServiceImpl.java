@@ -66,23 +66,38 @@ public class TeamServiceImpl implements TeamService {
 	public boolean actualizar(Team entity) {
 		boolean flag = false;
 		
-		int auxId = this.buscarPorID(entity.getId()).get().getTournament().getId();
+		Integer tournamentId = null;
+		if (entity.getTournament() != null)
+		{
+			tournamentId = entity.getTournament().getId(); 
+		}
+
+		System.out.println(tournamentId);
+		Integer auxId = null;
+		
+		if (this.buscarPorID(entity.getId()).get().getTournament() != null)
+		{
+			auxId = this.buscarPorID(entity.getId()).get().getTournament().getId(); 
+		}
+		
 		try {
 			if (entity.getId() >= 1) {
 				if (teamRepo.save(entity) != null) {
 					flag = true;
-
-					if (entity.getTournament().getId() != auxId) {
-
+					if (auxId != null) {
 						Tournament oldTournament = new Tournament();
 						oldTournament = tournamentService.buscarPorID(auxId).get();
 						oldTournament.setNTeams(oldTournament.getNTeams() - 1);
 						tournamentService.actualizar(oldTournament);
-
-						Tournament newTournament = new Tournament();
-						newTournament = tournamentService.buscarPorID(entity.getTournament().getId()).get();
-						newTournament.setNTeams(newTournament.getNTeams() + 1);
-						tournamentService.actualizar(newTournament);
+					}
+					System.out.println(entity.getTournament().getId());
+					Integer newId = entity.getTournament().getId();
+					if (newId != auxId) {
+						System.out.println("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+						Tournament newTeam = new Tournament();
+						newTeam = tournamentService.buscarPorID(entity.getTournament().getId()).get();
+						newTeam.setNTeams(newTeam.getNTeams() + 1);
+						tournamentService.actualizar(newTeam);
 					}
 				}
 			}
