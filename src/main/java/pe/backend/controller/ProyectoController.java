@@ -38,7 +38,7 @@ public class ProyectoController{
 	public ResponseEntity<List<Proyecto>> listar() {
 		try {
 			List<Proyecto> Proyectos = ProyectoService.listarTodas();
-			System.out.print("Hey")
+			System.out.print("Hey");
 			return new ResponseEntity<List<Proyecto>>(Proyectos, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
