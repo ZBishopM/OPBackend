@@ -67,17 +67,20 @@ public class ProyectoServiceImpl implements ProyectoService {
     public boolean actualizar(Proyecto entity) {
         return false;
     }
-
+    
     @Override
-    public List<Proyecto> getProyectosFromSueldo(float id) {
-        List<Proyecto> aux = ProyectoRepo.getProyectosFromSueldo(id);	
-		return aux;
+    public List<Proyecto> getProyectosFromSueldo(double sueldo) {
+    	System.out.println(sueldo);
+    	List<Proyecto> aux = ProyectoRepo.getProyectosFromSueldo(sueldo);
+    	System.out.println(aux.get(0).getId());
+    	
+    	System.out.println(aux);
+    	return aux;
     }
 
     @Override
     public List<Proyecto> getProyectosFromTipo(String id) {
-        List<Proyecto> aux = ProyectoRepo.getProyectosFromTipo(id);	
-		return aux;
+    	return ProyectoRepo.getProyectosFromTipo(id);	
     }
 	
 	

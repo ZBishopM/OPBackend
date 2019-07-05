@@ -11,8 +11,8 @@ import pe.backend.entities.Proyecto;
 public interface ProyectoRepository 
 				extends JpaRepository<Proyecto, Integer> {
 	
-    public List<Proyecto> getProyectosFromSueldo(float id);		
-    public List<Proyecto> getProyectosFromTipo(String id);	
+    public List<Proyecto> getProyectosFromSueldo(double sueldo);		
+    public List<Proyecto> getProyectosFromTipo(String tipoProyecto);	
 	
 	public Proyecto findProyectoByName(String name);
 

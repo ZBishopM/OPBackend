@@ -1,5 +1,6 @@
 package pe.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ import pe.backend.exception.ModeloNotFoundException;
 import pe.backend.services.ProyectoService;
 
 @RestController
-@RequestMapping(value="/api/Proyecto")
+@RequestMapping(value="/api/proyecto")
 @Api(value="REST API de Proyecto")
 @CrossOrigin
 public class ProyectoController{
@@ -104,16 +105,16 @@ public class ProyectoController{
 	}
 	
 	@GetMapping(value="/sueldo/{id}")
-	public ResponseEntity<List<Proyecto>> buscarProyectosPorTeamID(@PathVariable float id){
+	public ResponseEntity<List<Proyecto>> buscarProyectosPorSueldo(@PathVariable double id){
 		try {
 			List<Proyecto> entity = ProyectoService.getProyectosFromSueldo(id);
 			if(entity.isEmpty() == false){
 				return new ResponseEntity<List<Proyecto>>(entity, HttpStatus.OK);		
 			}else {
-				throw new ModeloNotFoundException("Jugador no encontrado");
+				throw new ModeloNotFoundException("No hay proyectos con sueldo mayor a" + id);
 			}			
 		} catch (Exception e) {
-			throw new ModeloNotFoundException("Jugador no encontrado");
+			throw new ModeloNotFoundException("Exception en buscar por sueldo");
 		}
     }
     
@@ -124,10 +125,10 @@ public class ProyectoController{
 			if(entity.isEmpty() == false){
 				return new ResponseEntity<List<Proyecto>>(entity, HttpStatus.OK);		
 			}else {
-				throw new ModeloNotFoundException("Jugador no encontrado");
+				throw new ModeloNotFoundException("No hay proyectos pertenecientes a ese tipo");
 			}			
 		} catch (Exception e) {
-			throw new ModeloNotFoundException("Jugador no encontrado");
+			throw new ModeloNotFoundException("Exception en buscar por tipo");
 		}
 	}
 	
