@@ -115,14 +115,12 @@ public class ProyectoController{
     }
     
     @GetMapping(value="/tipo/{id}")
-	public ResponseEntity<List<Proyecto>> buscarProytectosPorTipo(@PathVariable String id){
+	public ResponseEntity<Optional<List<Proyecto>>> buscarProytectosPorTipo(@PathVariable String id){
 		try {
-			List<Proyecto> entity = ProyectoService.getProyectosFromTipo(id);
-			if(entity.isEmpty() == false){
-				return new ResponseEntity<List<Proyecto>>(entity, HttpStatus.OK);		
-			}else {
-				throw new ModeloNotFoundException("No hay proyectos pertenecientes a ese tipo");
-			}			
+			Optional<List<Proyecto>> entity = ProyectoService.getProyectosFromTipo(id);
+	
+			return new ResponseEntity<Optional<List<Proyecto>>>(entity, HttpStatus.OK);	
+			
 		} catch (Exception e) {
 			throw new ModeloNotFoundException("Exception en buscar por tipo");
 		}

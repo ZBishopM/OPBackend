@@ -79,7 +79,7 @@ public class ProyectoServiceImpl implements ProyectoService {
     }
 
     @Override
-    public List<Proyecto> getProyectosFromTipo(String id) {
+    public 	Optional<List<Proyecto>> getProyectosFromTipo(String id) {
     	return ProyectoRepo.getProyectosFromTipo(id);	
     }
 	

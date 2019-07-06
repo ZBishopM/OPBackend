@@ -13,7 +13,7 @@ public interface ProyectoRepository
 				extends JpaRepository<Proyecto, Integer> {
 	
     public Optional<List<Proyecto>> getProyectosFromSueldo(double sueldo);		
-    public List<Proyecto> getProyectosFromTipo(String tipoProyecto);	
+    public 	Optional<List<Proyecto>> getProyectosFromTipo(String tipoProyecto);	
 	
 	public Proyecto findProyectoByName(String name);
 
