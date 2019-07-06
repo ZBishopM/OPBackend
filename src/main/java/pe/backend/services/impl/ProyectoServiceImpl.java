@@ -70,10 +70,9 @@ public class ProyectoServiceImpl implements ProyectoService {
     }
     
     @Override
-    public List<Proyecto> getProyectosFromSueldo(double sueldo) {
+    public Optional<List<Proyecto>> getProyectosFromSueldo(double sueldo) {
     	System.out.println(sueldo);
-    	List<Proyecto> aux = ProyectoRepo.getProyectosFromSueldo(sueldo);
-    	System.out.println(aux.get(0).getId());
+    	Optional<List<Proyecto>> aux = ProyectoRepo.getProyectosFromSueldo(sueldo);
     	
     	System.out.println(aux);
     	return aux;

@@ -17,7 +17,7 @@ public interface ProyectoService {
 	
 	public boolean eliminar(int id);
 
-    public List<Proyecto> getProyectosFromSueldo(double sueldo);		
+    public Optional<List<Proyecto>> getProyectosFromSueldo(double sueldo);		
     public List<Proyecto> getProyectosFromTipo(String tipoProyecto);	
 	
 	

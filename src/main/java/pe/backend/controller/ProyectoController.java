@@ -105,14 +105,10 @@ public class ProyectoController{
 	}
 	
 	@GetMapping(value="/sueldo/{id}")
-	public ResponseEntity<List<Proyecto>> buscarProyectosPorSueldo(@PathVariable double id){
+	public ResponseEntity<Optional<List<Proyecto>>> buscarProyectosPorSueldo(@PathVariable double id){
 		try {
-			List<Proyecto> entity = ProyectoService.getProyectosFromSueldo(id);
-			if(entity.isEmpty() == false){
-				return new ResponseEntity<List<Proyecto>>(entity, HttpStatus.OK);		
-			}else {
-				throw new ModeloNotFoundException("No hay proyectos con sueldo mayor a" + id);
-			}			
+			Optional<List<Proyecto>> entity = ProyectoService.getProyectosFromSueldo(id);
+			return new ResponseEntity<Optional<List<Proyecto>>>(entity, HttpStatus.OK);		
 		} catch (Exception e) {
 			throw new ModeloNotFoundException("Exception en buscar por sueldo");
 		}
