@@ -1,7 +1,11 @@
 package pe.backend;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+
 
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -34,3 +38,6 @@ public class SwaggerConfig {
 
 	}
 }
+
+
+

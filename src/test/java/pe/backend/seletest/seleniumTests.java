@@ -1,0 +1,110 @@
+package pe.backend.seletest;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class seleniumTests {
+	//private playerPage playerPageChrome;
+	//private playerPage playerFireFox;
+	//private playerPage playerIE;
+	private playerPage splayerpage = new playerPage();
+	
+
+	
+	
+	@Before
+	public void iniciarTest() {
+		//splayerpage = new playerPage();
+		/*playerPageChrome = new playerPage();
+		playerPageChrome.inicializarWebDriver("chrome");
+		playerFireFox = new playerPage();
+		playerFireFox.inicializarWebDriver("firefox");
+		playerIE = new playerPage();		
+		playerIE.inicializarWebDriver("internetexplorer");*/
+	}
+	
+	@Test 	
+	public void editarPlayerChrome() throws Exception {
+		splayerpage.inicializarWebDriver("chrome");
+		String name = "Juan Chrome";
+		String game = "Team Chromness 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.editarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+	
+	@Test 	
+	public void guardarPlayerChrome() throws Exception {
+		splayerpage.inicializarWebDriver("chrome");
+		String name = "Juan Test";
+		String game = "Test Fortress 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.ingresarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+
+	@Test 	
+	public void editarPlayerFirefox() throws Exception {
+		splayerpage.inicializarWebDriver("firefox");
+		String name = "Jone Fox";
+		String game = "Team Foxtress 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.editarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+	
+	@Test 	
+	public void guardarPlayerFirefox() throws Exception {
+		splayerpage.inicializarWebDriver("firefox");
+		String name = "George Fox";
+		String game = "Team Fortress 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.ingresarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+
+	@Test 	
+	public void editarPlayerEdge() throws Exception {		
+		splayerpage.inicializarWebDriver("internetexplorer");
+		String name = "Jone Edge";
+		String game = "Edge Fortress 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.editarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+	
+	@Test 	
+	public void guardarPlayerEdge() throws Exception {	
+		splayerpage.inicializarWebDriver("internetexplorer");
+		String name = "George Plain";
+		String game = "Team For3 2";
+		splayerpage.ingresarPagina("http://localhost:4200/");
+		splayerpage.ingresarModuloPlayer();
+		splayerpage.ingresarPlayer(name,game);
+		String expectedName = splayerpage.buscarPlayer(name);
+		Assert.assertEquals(expectedName, name);
+		splayerpage.cerrarPagina();
+	}
+
+}
