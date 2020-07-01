@@ -6,12 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'gradlew assemble'
-            }
-        }
-        stage('Test') {
-            steps {
-                bat 'gradlew test'
+                bat './mvnw spring-boot:run'
             }
         }
     }
