@@ -1,4 +1,4 @@
-package pe.backend.unitTests;
+package pe.backend;
 
 import static org.mockito.Mockito.doNothing;
 
